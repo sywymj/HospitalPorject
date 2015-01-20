@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ApiHook", "ApiHook.vcxproj"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WyScInterfaceLib", "..\WyScInterfaceLib\WyScInterfaceLib.csproj", "{B1304FD4-5733-49CA-AB96-40DF543C4DC1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScTest", "..\ScTest\ScTest.vcxproj", "{EE84891B-BDE0-47EA-818F-77029B6FBB81}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,16 @@ Global
 		{B1304FD4-5733-49CA-AB96-40DF543C4DC1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{B1304FD4-5733-49CA-AB96-40DF543C4DC1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B1304FD4-5733-49CA-AB96-40DF543C4DC1}.Release|Win32.ActiveCfg = Release|Any CPU
+		{EE84891B-BDE0-47EA-818F-77029B6FBB81}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{EE84891B-BDE0-47EA-818F-77029B6FBB81}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{EE84891B-BDE0-47EA-818F-77029B6FBB81}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{EE84891B-BDE0-47EA-818F-77029B6FBB81}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EE84891B-BDE0-47EA-818F-77029B6FBB81}.Debug|Win32.Build.0 = Debug|Win32
+		{EE84891B-BDE0-47EA-818F-77029B6FBB81}.Release|Any CPU.ActiveCfg = Release|Win32
+		{EE84891B-BDE0-47EA-818F-77029B6FBB81}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{EE84891B-BDE0-47EA-818F-77029B6FBB81}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{EE84891B-BDE0-47EA-818F-77029B6FBB81}.Release|Win32.ActiveCfg = Release|Win32
+		{EE84891B-BDE0-47EA-818F-77029B6FBB81}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
