@@ -17,3 +17,4 @@
 #include <atlstr.h>
 #include <exception>
 #include <stdexcept>
+#include <iostream>

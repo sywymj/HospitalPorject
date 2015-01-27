@@ -14,14 +14,32 @@ int _tmain(int argc, _TCHAR* argv[])
 	int hr;
 	try
 	{
-		HMODULE hinst_Si=LoadLibrary(_T("Siinterface.dll"));
+		int i;
+		
+		cin>>i;
+		HMODULE hinst_Si=LoadLibrary(_T("SiInterface.dll"));
 		if (!hinst_Si)
 		{
 			throw new exception("load siinterface.dll error");
 		}
 		PFUNINIT funInit=(PFUNINIT)GetProcAddress(hinst_Si,_T("INIT"));
 		PFUNBUSHANDLE funBusHandle=(PFUNBUSHANDLE)GetProcAddress(hinst_Si,_T("BUSINESS_HANDLE"));
-		if (funInit || funBusHandle)
+
+		char * pathBuf=new char[1024];
+		memset(pathBuf,0,1024);
+		GetCurrentDirectory(1020,pathBuf);
+		printf(pathBuf);
+		printf("\r\n");
+
+
+		memset(pathBuf,0,1024);
+		GetModuleFileName(hinst_Si,pathBuf,1020);
+		GetCurrentDirectory(1020,pathBuf);
+		printf(pathBuf);
+		printf("\r\n");
+
+
+		if (!(funInit && funBusHandle))
 		{
 			throw new exception("Get  init or bus_hanle function address error");
 		}
@@ -34,10 +52,12 @@ int _tmain(int argc, _TCHAR* argv[])
 		}
 
 
+		memset(outBuf,0,2048);
+		memset(inBuf,0,2048);
 		//构造传入参数
-
+		strcpy_s(inBuf,2047,_T("9120^11003^admin^^20150127192930-11003-0001^0000^^"));
 		//////////////////////////////////////////////////////////////////////////
-		*outBuf=0;
+		
 		hr=funBusHandle(inBuf,outBuf);
 		if (hr)
 		{
@@ -54,6 +74,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	{
 		printf(e->what());
 	}
+
+	int i;
+	cin>>i;
 	delete[] outBuf;
 	delete[] inBuf;
 	return 0;

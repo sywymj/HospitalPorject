@@ -5,12 +5,15 @@
 typedef int(WINAPI * PFUNBUSHANDLE)(char *,char *);
 static PFUNBUSHANDLE pFunBusHandle_True=NULL;
 
-__declspec(dllexport) int FunBusHandle_Mine(char *inputData,char *outputData)
+__declspec(dllexport) int WINAPI  FunBusHandle_Mine(char *inputData,char *outputData)
 {
 	WyScInterfaceLib::IWyScHookPtr comObj(__uuidof(WyScInterfaceLib::WyScInterFaceComLib));
-	long hr;
+	long hr=-1;
 	BSTR bstrIndata=_bstr_t(inputData);
-	BSTR bstrOutData;
+	BSTR bstrOutData=SysAllocStringByteLen("\0",2048);
+	if (bstrOutData == NULL)
+		return E_OUTOFMEMORY;
+
 	VARIANT_BOOL bBeforeSend;
 	if (comObj)
 	{
@@ -26,6 +29,8 @@ __declspec(dllexport) int FunBusHandle_Mine(char *inputData,char *outputData)
 		strcpy_s(outputData,2048,_bstr_t(bstrOutData));
 		comObj->Release();
 	}
+	//int hr=0;
+	SysFreeString(bstrOutData);
 	return hr;
 }
 
@@ -37,9 +42,18 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 	if (DetourIsHelperProcess()) {
 		return TRUE;
 	}
-	pFunBusHandle_True=(PFUNBUSHANDLE)DetourFindFunction(_T("siinterface.dll"),_T("BUSINESS_HANDLE"));
-
+	//pFunBusHandle_True=(PFUNBUSHANDLE)DetourFindFunction(_T("SiInterface.dll"),_T("BUSINESS_HANDLE"));
+	
 	if (ul_reason_for_call == DLL_PROCESS_ATTACH) {
+
+		CoInitializeEx(NULL,COINIT_MULTITHREADED);
+
+		HMODULE hinst_Si=LoadLibrary(_T("SiInterface.dll"));
+		if (hinst_Si)
+		{
+			pFunBusHandle_True=(PFUNBUSHANDLE)GetProcAddress(hinst_Si,_T("BUSINESS_HANDLE"));
+		}
+
 		if (pFunBusHandle_True)
 		{
 			DetourRestoreAfterWith();
@@ -52,6 +66,8 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 		
 	}
 	else if (ul_reason_for_call == DLL_PROCESS_DETACH) {
+		CoUninitialize();
+
 		if (pFunBusHandle_True)
 		{
 			DetourTransactionBegin();

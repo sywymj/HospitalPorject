@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 namespace WyScInterfaceLib
 {
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
@@ -20,7 +21,10 @@ namespace WyScInterfaceLib
     {
         public bool beforeSend(ref int hr, ref string inputData,ref string outputData)
         {
-            return false;
+            MessageBox.Show(inputData, "传入参数", MessageBoxButtons.OKCancel);
+            inputData += "$$$$$$$$$change in Data";
+            outputData = "wangyong prograssed";
+            return true;
         }
         public void afterSend(ref int hr,ref string outputData)
         {
