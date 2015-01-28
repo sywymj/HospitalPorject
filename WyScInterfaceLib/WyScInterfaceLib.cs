@@ -22,12 +22,14 @@ namespace WyScInterfaceLib
         public bool beforeSend(ref int hr, ref string inputData,ref string outputData)
         {
             MessageBox.Show(inputData, "传入参数", MessageBoxButtons.OKCancel);
-            inputData += "$$$$$$$$$change in Data";
-            outputData = "wangyong prograssed";
-            return true;
+            //inputData += "$$$$$$$$$change in Data";
+            //outputData = "wangyong prograssed";
+            //return true;
+            return false;
         }
         public void afterSend(ref int hr,ref string outputData)
         {
+            MessageBox.Show(string.Format(@"outdata:{0}\r\n{1}", hr, outputData));
             //return 0;
         }
     }

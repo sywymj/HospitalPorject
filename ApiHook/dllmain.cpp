@@ -9,7 +9,7 @@ __declspec(dllexport) int WINAPI  FunBusHandle_Mine(char *inputData,char *output
 {
 	WyScInterfaceLib::IWyScHookPtr comObj(__uuidof(WyScInterfaceLib::WyScInterFaceComLib));
 	long hr=-1;
-	BSTR bstrIndata=_bstr_t(inputData);
+	BSTR bstrIndata=CString(inputData).AllocSysString();
 	BSTR bstrOutData=SysAllocStringByteLen("\0",2048);
 	if (bstrOutData == NULL)
 		return E_OUTOFMEMORY;
@@ -26,10 +26,11 @@ __declspec(dllexport) int WINAPI  FunBusHandle_Mine(char *inputData,char *output
 			comObj->afterSend(&hr,&bstrOutData);
 		}
 
-		strcpy_s(outputData,2048,_bstr_t(bstrOutData));
+		strcpy_s(outputData,510,_bstr_t(bstrOutData));
 		comObj->Release();
 	}
 	//int hr=0;
+	SysFreeString(bstrIndata);
 	SysFreeString(bstrOutData);
 	return hr;
 }
@@ -46,7 +47,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 	
 	if (ul_reason_for_call == DLL_PROCESS_ATTACH) {
 
-		CoInitializeEx(NULL,COINIT_MULTITHREADED);
+		//CoInitializeEx(NULL,COINIT_MULTITHREADED);
 
 		HMODULE hinst_Si=LoadLibrary(_T("SiInterface.dll"));
 		if (hinst_Si)
@@ -66,7 +67,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 		
 	}
 	else if (ul_reason_for_call == DLL_PROCESS_DETACH) {
-		CoUninitialize();
+		//CoUninitialize();
 
 		if (pFunBusHandle_True)
 		{

@@ -15,7 +15,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	try
 	{
 		int i;
-		
+		cout<<"load siinterface";
 		cin>>i;
 		HMODULE hinst_Si=LoadLibrary(_T("SiInterface.dll"));
 		if (!hinst_Si)
@@ -25,7 +25,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		PFUNINIT funInit=(PFUNINIT)GetProcAddress(hinst_Si,_T("INIT"));
 		PFUNBUSHANDLE funBusHandle=(PFUNBUSHANDLE)GetProcAddress(hinst_Si,_T("BUSINESS_HANDLE"));
 
-		char * pathBuf=new char[1024];
+		/*char * pathBuf=new char[1024];
 		memset(pathBuf,0,1024);
 		GetCurrentDirectory(1020,pathBuf);
 		printf(pathBuf);
@@ -36,7 +36,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		GetModuleFileName(hinst_Si,pathBuf,1020);
 		GetCurrentDirectory(1020,pathBuf);
 		printf(pathBuf);
-		printf("\r\n");
+		printf("\r\n");*/
 
 
 		if (!(funInit && funBusHandle))
@@ -55,7 +55,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		memset(outBuf,0,2048);
 		memset(inBuf,0,2048);
 		//构造传入参数
-		strcpy_s(inBuf,2047,_T("9120^11003^admin^^20150127192930-11003-0001^0000^^"));
+		//strcpy_s(inBuf,2047,_T("9120^11003^admin^^20150127192930-11003-0001^0000^^"));
+		sprintf_s(inBuf,2047,"9120^11003^admin^^20150127192930-11003-%04d^0000^^",i);
 		//////////////////////////////////////////////////////////////////////////
 		
 		hr=funBusHandle(inBuf,outBuf);
@@ -75,6 +76,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		printf(e->what());
 	}
 
+	cout<<"finish\r\n";
 	int i;
 	cin>>i;
 	delete[] outBuf;
